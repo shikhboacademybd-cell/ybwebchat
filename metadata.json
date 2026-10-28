@@ -1,0 +1,6 @@
+{
+  "name": "WhatsApp Web - নিরাপদ মেসেজিং ও ফাইল শেয়ারিং",
+  "description": "হোয়াটসঅ্যাপের মতো রিয়েল-টাইম মেসেজিং, ফাইল শেয়ারিং, গ্রুপ চ্যাট, অডিও স্ট্যাটাস ও মেসেজ পড়ার সুবিধাসম্পন্ন পূর্ণাঙ্গ প্ল্যাটফর্ম।",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

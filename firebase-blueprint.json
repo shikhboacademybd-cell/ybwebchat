@@ -1,0 +1,98 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Registered user profile with phone number and credentials",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 20 },
+        "password": { "type": "string", "maxLength": 100 },
+        "avatar": { "type": "string", "maxLength": 2048 },
+        "bio": { "type": "string", "maxLength": 500 },
+        "isOnline": { "type": "boolean" },
+        "lastSeen": { "type": "string", "maxLength": 100 },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["id", "name", "phone", "password", "createdAt"]
+    },
+    "Conversation": {
+      "title": "Conversation",
+      "description": "Chat conversation thread between users or groups",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "isGroup": { "type": "boolean" },
+        "name": { "type": "string", "maxLength": 100 },
+        "avatar": { "type": "string", "maxLength": 2048 },
+        "participants": { "type": "array" },
+        "adminIds": { "type": "array" },
+        "groupDescription": { "type": "string", "maxLength": 500 },
+        "lastMessage": { "type": "object" },
+        "unreadCount": { "type": "number" },
+        "isTyping": { "type": "boolean" },
+        "typingUserName": { "type": "string", "maxLength": 100 },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["id", "isGroup", "participants", "updatedAt"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Message within a conversation",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "conversationId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string", "maxLength": 100 },
+        "senderAvatar": { "type": "string", "maxLength": 2048 },
+        "type": { "type": "string", "enum": ["text", "image", "audio", "file"] },
+        "text": { "type": "string", "maxLength": 5000 },
+        "fileUrl": { "type": "string", "maxLength": 200000 },
+        "fileName": { "type": "string", "maxLength": 255 },
+        "fileSize": { "type": "string", "maxLength": 50 },
+        "audioDuration": { "type": "number" },
+        "timestamp": { "type": "number" },
+        "status": { "type": "string", "enum": ["sent", "delivered", "read"] }
+      },
+      "required": ["id", "conversationId", "senderId", "senderName", "type", "timestamp", "status"]
+    },
+    "StatusItem": {
+      "title": "StatusItem",
+      "description": "Status or story item posted by a user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string", "maxLength": 100 },
+        "userAvatar": { "type": "string", "maxLength": 2048 },
+        "type": { "type": "string", "enum": ["text", "image"] },
+        "content": { "type": "string", "maxLength": 50000 },
+        "caption": { "type": "string", "maxLength": 500 },
+        "bgColor": { "type": "string", "maxLength": 30 },
+        "timestamp": { "type": "number" },
+        "viewers": { "type": "array" }
+      },
+      "required": ["id", "userId", "userName", "type", "content", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile collection indexed by phone and userId"
+    },
+    "/conversations/{conversationId}": {
+      "schema": "Conversation",
+      "description": "Active chat conversations and threads"
+    },
+    "/conversations/{conversationId}/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Real-time messages belonging to a conversation"
+    },
+    "/statuses/{statusId}": {
+      "schema": "StatusItem",
+      "description": "Temporary 24h stories and statuses"
+    }
+  }
+}
